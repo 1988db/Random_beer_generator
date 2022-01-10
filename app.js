@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', ()=> {
-    fetch('https://api.punkapi.com/v2/beers/random')
+    const startBtn = document.querySelector('.beer-button');
+    const randomBeer = document.querySelector('.random-beer');
+    const descriptionDisplay = document.querySelector('.description');
+
+    function getData() {
+        fetch('https://api.punkapi.com/v2/beers/random')
         .then(response => {
             return response.json()
         })
@@ -9,6 +14,12 @@ document.addEventListener('DOMContentLoaded', ()=> {
             const description = data[0].description;            
             const {volume} = data[0];
             const volumeValue = volume.value;
-            
+            const volumeUnit = volume.unit;
+
+            randomBeer.innerText = name + ' ' + volumeValue + volumeUnit;
+            descriptionDisplay.innerText = description;
         })
+    }
+    
+    startBtn.addEventListener('click', getData);
 })
